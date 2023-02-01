@@ -1,53 +1,28 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import Input from "./components/ui/Input";
-import TodoPage from "./page/TodoPage";
-import AuthProvider from "./providers/AuthProvider";
-import StyleProvider from "./providers/StyleProvider";
 
-
-
-export const Context = createContext(null)
+import { useEffect } from 'react';
+import { fetchPokemonsByName } from './api/fetchPokemonByName';
+import { fetchPokemons } from './api/fetchPokemons';
+import PokemonCard from './components/PokemonCard';
+import './theme/index.css'
+import { useTheme } from './theme/useTheme';
 
 function App() {
-  const [ search, setSearch ] = useState('')
 
-  const [ authData, setAuthData ] = useState({
-    login: '',
-    password: '',
-  })
-  const [ auth, setAuth ] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
-  const handleOnChange = (e) => {
-    setAuthData((prev) => {
-      return {...prev, [ e.target.name ]: e.target.value}
-    })
-  }
+  useEffect(() => {
+    fetchPokemons()
+      .then((data) => console.log(data))
 
-  const SignIn = () => {
-    setAuth(true)
-    const token = authData.login + '' + authData.password
-    localStorage.setItem('access_token', token)
-  }
+    // fetchPokemonsByName('pikachu')
+    //   .then((data) => console.log(data))
+  }, [])
 
   return (
-    <Context.Provider value={{ search, setSearch, setAuth, auth }}>
-      <div className="App">
-      <AuthProvider>
-       <StyleProvider>
-        {auth 
-        ?
-          <TodoPage/>
-        :
-          <form onSubmit={SignIn}>
-            <Input name='login' handleOnChange={handleOnChange} value={authData.login}/>
-            <Input name='password' handleOnChange={handleOnChange} value={authData.password}/>
-            <button type='submit'>Sign in</button>
-          </form>
-        }
-        </StyleProvider>
-      </AuthProvider>
-     </div>
-    </Context.Provider>
+    <div className={`app ${theme}`}>
+      <PokemonCard/>
+      <button className='btn' onClick={toggleTheme}>Change color</button>
+    </div>
   );
 }
 
