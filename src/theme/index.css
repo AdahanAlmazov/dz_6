@@ -1,5 +1,5 @@
-@import './them/dark';
-@import './them/light';
+@import "./them/dark";
+@import "./them/light";
 
 .app {
   width: 100%;
@@ -8,7 +8,7 @@
   background: var(--background-color);
   color: var(--text-color);
 
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 34px;
   font-weight: 700;
 
@@ -20,7 +20,7 @@
 
 .btn {
   background: var(--button-back);
-  color: var(--button-text);;
+  color: var(--button-text);
   padding: 15px;
   font-size: 24px;
   margin-top: 24px;
@@ -37,4 +37,9 @@
   border: 2px solid gray;
 
   border-radius: 8px;
+}
+
+.pokemonLi {
+  font-size: 16px;
+  color: var(--button-text);
 }
